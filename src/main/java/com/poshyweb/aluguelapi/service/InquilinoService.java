@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InquilinoService implements Serializable {
@@ -26,7 +27,11 @@ public class InquilinoService implements Serializable {
         return repository.findAllByNomeIsLike(nome);
     }
 
-    public Object findById(Long id) {
+    public Optional<InquilinoEntity> findById(Long id) {
         return repository.findById(id);
+    }
+
+    public List<InquilinoEntity> update(Long id) {
+        return repository.saveAllAndFlush(id);
     }
 }

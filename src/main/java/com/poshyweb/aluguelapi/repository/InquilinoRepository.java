@@ -13,4 +13,6 @@ public interface InquilinoRepository extends JpaRepository<InquilinoEntity, Long
     List<InquilinoEntity> findAllByNomeIsLike(String nome);
 
     Optional<InquilinoEntity> findById(Long id);
+
+    List<InquilinoEntity> saveAllAndFlush(Long id);
 }
