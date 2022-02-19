@@ -5,12 +5,11 @@ import com.poshyweb.aluguelapi.repository.InquilinoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class InquilinoService implements Serializable {
+public class InquilinoService {
 
     @Autowired
     private InquilinoRepository repository;
@@ -31,7 +30,23 @@ public class InquilinoService implements Serializable {
         return repository.findById(id);
     }
 
-    public List<InquilinoEntity> update(Long id) {
-        return repository.saveAllAndFlush(id);
+    public InquilinoEntity update(Long id, InquilinoEntity inquilino) {
+        InquilinoEntity entity = repository.getById(id);
+        entity.setNome(inquilino.getNome());
+        entity.setCpf(inquilino.getCpf());
+        entity.setConjude(inquilino.getConjude());
+        entity.setQtdDependentes(inquilino.getQtdDependentes());
+        return repository.save(entity);
     }
+
+    public void delete(Long id) {
+        InquilinoEntity inquilinoEntity= repository.getById(id);
+        try {
+            repository.deleteById(id);
+        } catch (Exception e) {
+            System.out.println(e+"aqui deu pau"+ e.getMessage());
+        }
+
+    }
+
 }

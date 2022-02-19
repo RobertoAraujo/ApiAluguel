@@ -1,13 +1,16 @@
 package com.poshyweb.aluguelapi.controller;
 
+import com.poshyweb.aluguelapi.dto.InquilinoDTO;
 import com.poshyweb.aluguelapi.model.InquilinoEntity;
 import com.poshyweb.aluguelapi.service.InquilinoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -25,7 +28,7 @@ public class InquilinoController {
         return ResponseEntity.ok(service.findAll());
     }
 
-   @GetMapping(value = "nome/{nome}")
+   @GetMapping(value = "/nome/{nome}")
     public ResponseEntity<List<InquilinoEntity>> listarPorNome(@PathVariable String nome){
         return ResponseEntity.ok(service.findByNomeInquilino(nome));
    }
@@ -45,13 +48,16 @@ public class InquilinoController {
                        inquilino.getConjude(), inquilino.getQtdDependentes()));
     }
 
-    @PostMapping("/update/{id}")
-    public List<InquilinoEntity> updatePorId(
-            @PathVariable("id") long id, @Validated InquilinoEntity inquilino, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-           inquilino.setId(id);
-        }
-        return service.update(id);
+    @PutMapping (value = "/update/{id}")
+    public ResponseEntity<InquilinoEntity> update(@Validated @PathVariable Long id, @RequestBody InquilinoEntity inquilino) {
+        InquilinoEntity entity = service.update(id , inquilino);
+        return ResponseEntity.ok().body(entity);
+    }
+
+    @DeleteMapping(value = "/deletar/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 
