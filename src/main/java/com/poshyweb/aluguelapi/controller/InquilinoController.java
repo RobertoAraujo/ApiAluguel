@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/inquilino")
 public class InquilinoController {
 
     @Autowired
@@ -50,8 +50,8 @@ public class InquilinoController {
     }
 
     @DeleteMapping(value = "/deletar/{id}")
-    public ResponseEntity<InquilinoEntity> delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 

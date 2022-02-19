@@ -39,14 +39,14 @@ public class InquilinoService {
         return repository.save(entity);
     }
 
-    public void delete(Long id) {
+    public InquilinoEntity delete(Long id) {
         InquilinoEntity inquilinoEntity= repository.getById(id);
         try {
             repository.deleteById(id);
         } catch (Exception e) {
             System.out.println(e+"aqui deu pau"+ e.getMessage());
         }
-
+        return inquilinoEntity;
     }
 
 }
